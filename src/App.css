@@ -23,3 +23,6 @@ table tbody > tr > td{
     margin-left: 10px;
 }
 
+.sort {
+    cursor: pointer;
+}

@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getBreweries } from "../../Services";
+import { getBreweries } from "../../Services"
 
 export default function BreweryList() {
   const [breweries, setBreweries] = React.useState([]);
   const [text, setText] = React.useState("");
+  const [sortName, setSortName] = React.useState("");
 
   React.useEffect(() => {
     const cb = async () => {
       try {
-        const res = await getBreweries();        
+        const res = await getBreweries();
         setBreweries(res);
       } catch (error) {
         console.log("Error: ", error);
@@ -37,10 +38,41 @@ export default function BreweryList() {
     try {
       const res = await getBreweries();
       setBreweries(res);
-      setText('')
+      setText("");
     } catch (error) {
       console.log("Error: ", error);
-      setText('')
+      setText("");
+    }
+  };
+
+  const handleSortName = () => {
+    const originBreweries = [...breweries];
+    if (sortName === "" || sortName === "desc") {
+      setSortName("asc");
+      const newList = originBreweries.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+      setBreweries(newList);
+    } else {
+      setSortName("desc");
+      const newList = originBreweries.sort((a, b) => {
+        if (a.name > b.name) {
+          return -1;
+        }
+
+        if (a.name < b.name) {
+          return 1;
+        }
+        return 0;
+      });
+      setBreweries(newList);
     }
   };
   return (
@@ -62,7 +94,11 @@ export default function BreweryList() {
       <table>
         <thead>
           <tr>
-            <th>Name </th>
+            <th>
+              <div className="sort" onClick={handleSortName}>
+                Name
+              </div>
+            </th>
             <th>City</th>
             <th>State</th>
             <th>Country</th>
@@ -93,11 +129,6 @@ export default function BreweryList() {
           ))}
         </tbody>
       </table>
-      {/* <ul>
-        <li>
-          <Link to="/breweries/1">Brewery 1</Link> - Brewtown, OR
-        </li>
-      </ul> */}
     </main>
   );
 }
