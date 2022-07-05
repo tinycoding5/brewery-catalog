@@ -1,0 +1,25 @@
+table {
+  margin: 12px;
+  padding: 10px;
+}
+
+table thead > tr > th,
+table tbody > tr > td{
+    padding: 10px 12px;
+    border: 1px solid #999999;
+}
+
+.search-form {
+    margin: 12px;
+    padding: 10px;
+}
+
+.search-form input {
+    padding: 10px 12px;
+}
+
+.search-form button {
+    padding: 10px 12px;
+    margin-left: 10px;
+}
+
